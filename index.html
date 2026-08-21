@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chaubaraa Post Office: some memories take years to arrive</title>
+  <meta name="description" content="Write a letter, decorate it with the flowers of Chaubaraa, and post it. Some memories take years to arrive. This Rakhi, send one." />
+
+  <!-- Oswald (Abraham stand-in), Poppins (Gotham stand-in), Crimson Pro,
+       and the three hands: Dancing Script, Caveat, Special Elite. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Poppins:wght@400;500;600&family=Crimson+Pro:ital,wght@0,400;0,500;1,400;1,500&family=Dancing+Script:wght@500;600&family=Caveat:wght@500;600&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-theme="dark">
+
+  <!-- ambient layers -->
+  <div class="silhouettes" aria-hidden="true">
+    <svg class="sil-window" viewBox="0 0 100 160"><path fill="none" stroke="currentColor" stroke-width="3" d="M50 4C24 4 10 30 10 60v96h80V60C90 30 76 4 50 4ZM50 4v152M10 78h80M10 116h80"/></svg>
+    <svg class="sil-bottle" viewBox="0 0 80 120"><path fill="none" stroke="currentColor" stroke-width="3" d="M32 6h16v14c0 4 14 8 14 26v56a8 8 0 0 1-8 8H26a8 8 0 0 1-8-8V46c0-18 14-22 14-26V6ZM30 20h20"/></svg>
+    <svg class="sil-rail" viewBox="0 0 1000 90" preserveAspectRatio="none"><path fill="none" stroke="currentColor" stroke-width="3" d="M0 20h1000M0 82h1000M40 20v62M120 20v62M200 20v62M280 20v62M360 20v62M440 20v62M520 20v62M600 20v62M680 20v62M760 20v62M840 20v62M920 20v62"/></svg>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="page-frame" aria-hidden="true"></div>
+
+  <!-- shared kraft gradients + paper grain for the envelope component -->
+  <svg class="ec-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="ecSideL" x1="0" y1="0" x2="1" y2="0.35">
+        <stop offset="0" stop-color="#CEB487" /><stop offset="1" stop-color="#9C7C4A" />
+      </linearGradient>
+      <linearGradient id="ecSideR" x1="1" y1="0" x2="0" y2="0.35">
+        <stop offset="0" stop-color="#CEB487" /><stop offset="1" stop-color="#9C7C4A" />
+      </linearGradient>
+      <linearGradient id="ecFlap" x1="0.5" y1="0" x2="0.5" y2="1">
+        <stop offset="0" stop-color="#CBB080" /><stop offset="0.55" stop-color="#B89A67" /><stop offset="1" stop-color="#9E7E4C" />
+      </linearGradient>
+      <linearGradient id="ecBack" x1="0.5" y1="0" x2="0.5" y2="1">
+        <stop offset="0" stop-color="#8C6E3D" /><stop offset="1" stop-color="#6F5530" />
+      </linearGradient>
+      <radialGradient id="ecTuck" cx="0.5" cy="0" r="0.7">
+        <stop offset="0" stop-color="rgba(40,24,8,.34)" /><stop offset="1" stop-color="rgba(40,24,8,0)" />
+      </radialGradient>
+      <filter id="ecGrain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="n" /><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .5 0" /></filter>
+      <clipPath id="ecClipBody"><path d="M6 40 H94 V88 L50 104 L6 88 Z" /></clipPath>
+      <clipPath id="ecClipFlap"><path d="M50 63 L94 88 L50 104 L6 88 Z" /></clipPath>
+    </defs>
+  </svg>
+
+  <div class="app">
+    <!-- ================= header ================= -->
+    <header class="site-header">
+      <a class="brand" href="?" data-nav="daak" aria-label="Chaubaraa Daak">
+        <img class="logo-cream" src="logo-wordmark-cream.png" alt="Chaubaraa" />
+        <img class="logo-wine"  src="logo-wordmark-wine.png"  alt="Chaubaraa" />
+      </a>
+
+      <div class="site-title"><a href="?" data-nav="daak">Post Office</a></div>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+        </button>
+        <button class="btn btn-primary" data-action="write" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z"/></svg>
+          Write a letter
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ================= Daak wall (entry) ================= -->
+      <section class="screen" id="screen-daak" aria-labelledby="daak-h">
+        <h1 id="daak-h" class="sr-only">Post Office</h1>
+        <div class="garden wrap">
+          <div id="mineSection"><!-- "Your letters" collection, built by app.js --></div>
+          <div class="wall-sec-head" id="wallHead"><h2>Letters at the Post Office</h2></div>
+          <div class="wall-grid" id="daakWall"></div>
+          <div class="wall-search">
+            <input class="text-field" id="daakSearch" placeholder="Search letters…" autocomplete="off" aria-label="Search letters" />
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= Write (live split) ================= -->
+      <section class="screen" id="screen-write" aria-labelledby="write-h">
+        <a class="back-link" href="?" data-nav="daak">← Back to Post Office</a>
+        <h1 id="write-h" class="sr-only">Write a letter</h1>
+        <div class="write-split">
+          <div class="write-preview" id="writePreview"><!-- live letter, built by app.js --></div>
+          <div class="write-panel-card">
+            <div class="write-form" id="writeForm"><!-- form, built by app.js --></div>
+            <div class="wf-rail" id="wfRail" aria-hidden="true"><div class="wf-thumb" id="wfThumb"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= Single letter (reading) ================= -->
+      <section class="screen" id="screen-letter" aria-labelledby="letter-h">
+        <a class="back-link" href="?" data-nav="daak">← Back to Post Office</a>
+        <h1 id="letter-h" class="sr-only">A letter</h1>
+        <div class="letter-view wrap" id="letterView"><!-- built by app.js --></div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><a href="https://chaubaraa.com" target="_blank" rel="noopener">Visit Chaubaraa's main page<span class="link-arrow" aria-hidden="true">→</span></a></footer>
+  </div>
+
+  <!-- full-page post animation overlay -->
+  <div class="post-overlay" id="postOverlay" aria-hidden="true"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/flowers.js"></script>
+  <script src="js/letters.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
