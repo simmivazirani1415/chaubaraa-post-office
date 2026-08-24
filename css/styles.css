@@ -292,6 +292,12 @@ body[data-theme='light'] .hand-opt[aria-pressed='true'] { border-color: var(--wi
 .reading-prompt p { font-family: var(--font-serif); font-style: italic; color: var(--fg-dim); font-size: 19px; margin-bottom: 16px; }
 .reading-cta { display: flex; align-items: center; justify-content: center; }
 
+/* ---- standalone recipient page (open.html): no header, no wall, no
+   ambient layers, just the letter, the CTA, and the footer link, on the
+   same plain maroon background ---- */
+.open-page { display: flex; flex-direction: column; min-height: 100vh; }
+.open-main { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; padding: 60px 16px 30px; }
+
 /* ---- post animation (centered, full page) ---- */
 .post-overlay { position: fixed; inset: 0; z-index: 90; display: none; overflow-y: auto; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); text-align: center; }
 .post-overlay.is-open { display: block; animation: fadeUp var(--t-med) var(--ease); }

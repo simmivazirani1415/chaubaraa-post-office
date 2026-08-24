@@ -289,7 +289,10 @@
     if (editingId) L.mineUpdate(editingId, letter, 'posted');
     else L.mineAdd(letter, 'posted');
     editingId = null;
-    var url = location.origin + location.pathname + '?letter=' + L.encode(letter);
+    // shared links open the standalone recipient page (open.html), not the
+    // full site: the wall's own ?letter= links keep the full SPA view
+    var dir = location.pathname.replace(/[^/]*$/, '');
+    var url = location.origin + dir + 'open.html?letter=' + L.encode(letter);
     runSend(letter, url);
   }
 
