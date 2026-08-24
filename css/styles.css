@@ -302,7 +302,15 @@ body[data-theme='light'] .hand-opt[aria-pressed='true'] { border-color: var(--wi
 
 .reading-prompt { margin-top: 34px; }
 .reading-prompt p { font-family: var(--font-serif); font-style: italic; color: var(--fg-dim); font-size: 19px; margin-bottom: 16px; }
-.reading-cta { display: flex; align-items: center; justify-content: center; }
+.reading-cta { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+/* on-site reading view only (View 1): copy this letter / reuse it as a
+   starting draft, alongside the "Write a letter" CTA */
+.reuse-btn { background: transparent; border: none; color: var(--fg-dim); font-family: var(--font-serif); font-style: italic; font-size: 16px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; padding: 6px 4px; transition: color var(--t-med) var(--ease); }
+.reuse-btn:hover { color: var(--fg); }
+.copy-icon-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--card-line); background: transparent; color: var(--fg); display: grid; place-items: center; transition: background var(--t-med) var(--ease), border-color var(--t-med) var(--ease), transform var(--t-med) var(--ease); }
+.copy-icon-btn:hover { background: color-mix(in srgb, var(--fg) 9%, transparent); transform: translateY(-1px); }
+.copy-icon-btn svg { width: 17px; height: 17px; }
+.copy-icon-btn.copied { border-color: var(--fg); }
 
 /* ---- standalone recipient page (open.html): no header, no wall, no
    ambient layers, just the letter, the CTA, and the footer link, on the
