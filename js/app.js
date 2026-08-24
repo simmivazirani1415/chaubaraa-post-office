@@ -129,31 +129,6 @@
   var prefillLetter = null;   // {to,from,message,flowers,font, editId} to load into the form
   var editingId = null;       // id of the draft being edited (null for a fresh letter)
 
-  var COPY_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
-  var CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
-
-  /* Copy text to the clipboard, with graceful fallbacks. */
-  function copyText(text, btn, orig) {
-    function ok() {
-      toast('Copied');
-      if (btn) { btn.innerHTML = CHECK_SVG; btn.classList.add('copied');
-        setTimeout(function () { btn.innerHTML = orig; btn.classList.remove('copied'); }, 1500); }
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(ok, function () { fallbackCopy(text, ok); });
-    } else { fallbackCopy(text, ok); }
-  }
-  function fallbackCopy(text, ok) {
-    try {
-      var ta = document.createElement('textarea');
-      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; ta.style.top = '0';
-      document.body.appendChild(ta); ta.focus(); ta.select();
-      var done = document.execCommand('copy'); document.body.removeChild(ta);
-      if (done) { ok(); return; }
-    } catch (e) {}
-    window.prompt('Copy this letter:', text);
-  }
-
   function enterWrite() {
     if (!writeBuilt) buildWrite();
     draft = { to: '', from: '', message: '', flowers: [], font: 'vintage' };
@@ -314,7 +289,10 @@
     if (editingId) L.mineUpdate(editingId, letter, 'posted');
     else L.mineAdd(letter, 'posted');
     editingId = null;
-    var url = location.origin + location.pathname + '?letter=' + L.encode(letter);
+    // shared links open the standalone recipient page (open.html), not the
+    // full site: the wall's own ?letter= links keep the full SPA view
+    var dir = location.pathname.replace(/[^/]*$/, '');
+    var url = location.origin + dir + 'open.html?letter=' + L.encode(letter);
     runSend(letter, url);
   }
 
@@ -385,30 +363,26 @@
         '<p style="margin-top:18px"><button class="btn btn-primary" data-action="write" type="button">Write a letter</button></p></div>';
       return;
     }
-    // the canonical open envelope: stamp on the card, TO: YOU on the flap
+    // the canonical open envelope: stamp on the card, TO: YOU on the flap.
+    // On load it plays a gentle open reveal: closed envelope -> flap opens ->
+    // letter slides out -> flower blooms + stamp settles -> CTA fades in.
     view.innerHTML =
-      '<div class="reading">' +
+      '<div class="reading' + (reduceMotion ? '' : ' anim') + '" id="readingRoot">' +
         '<div class="envelope-card ec-read" id="ecRead">' +
           L.envelopeInner({
             msg: letter.message, font: letter.font, flowers: letter.flowers, corner: 'right',
             cardTo: 'To: ' + (letter.to || 'you'), envLine: letter.from ? 'From: ' + letter.from : 'To: ' + (letter.to || 'you'), stamp: true
           }) +
+          (reduceMotion ? '' : '<img class="ec-sealedimg" src="envelope-sealed.png" alt="" draggable="false" />') +
         '</div>' +
         '<div class="reading-prompt">' +
           '<p>Someone kept this for you. Write one back.</p>' +
           '<div class="reading-cta">' +
-            '<button class="btn btn-primary" data-action="write" type="button">Write a letter →</button>' +
-            '<button class="reuse-btn" id="useLetterBtn" type="button">Use this as my letter</button>' +
-            '<button class="copy-icon-btn" id="copyLetterBtn" type="button" aria-label="Copy this letter" title="Copy this letter">' + COPY_SVG + '</button>' +
+            '<button class="btn btn-primary" data-action="write" type="button">Write a letter</button>' +
           '</div>' +
         '</div>' +
       '</div>';
-    requestAnimationFrame(function () { var e = $('#ecRead'); if (e) e.classList.add('revealed'); });
-
-    var copyBtn = $('#copyLetterBtn');
-    if (copyBtn) { var orig = copyBtn.innerHTML; copyBtn.addEventListener('click', function () { copyText(letter.message, copyBtn, orig); }); }
-    var useBtn = $('#useLetterBtn');
-    if (useBtn) useBtn.addEventListener('click', function () { prefillLetter = { message: letter.message }; nav('create=true'); });
+    requestAnimationFrame(function () { var e = $('#readingRoot'); if (e) e.classList.add('revealed'); });
   }
 
   /* ---------------------------------------------------------- wiring */

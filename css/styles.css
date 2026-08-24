@@ -256,22 +256,47 @@ body[data-theme='light'] .hand-opt[aria-pressed='true'] { border-color: var(--wi
 .hand-opt .hand-sample { font-size: 22px; line-height: 1.2; }
 .hand-opt[data-font='typewriter'] .hand-sample { font-size: 16px; }
 
-/* ---- reading view (open by default, gentle reveal) ---- */
+/* ---- reading view: closed envelope opens on load, then the CTA ---- */
+/* Beats: 1) closed envelope crossfades open (flap lifts, ~700ms) ->
+   2) the letter slides up into view (~800ms) -> 3) the flower blooms and the
+   stamp settles (~600ms) -> 4) the prompt + CTA fade in (~500ms). Two static
+   images cross-fade for the open/closed envelope, same technique as the post
+   animation; reduced motion skips straight to the final open state. */
 .letter-view { position: relative; z-index: 1; min-height: calc(100vh - 210px); display: grid; place-items: center; padding: 10px 0 90px; text-align: center; }
 .reading { width: min(520px, 90vw); margin: 0 auto; }
-.ec-read .ec-card { opacity: 0; transform: translateY(10%); transition: opacity 600ms var(--ease) 160ms, transform 800ms var(--ease) 160ms; }
-.ec-read.revealed .ec-card { opacity: 1; transform: translateY(0); }
-.ec-read .ec-flower { opacity: 0; transition: opacity 700ms var(--ease) 420ms; }
-.ec-read.revealed .ec-flower { opacity: 1; }
+
+.ec-sealedimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; z-index: 6; pointer-events: none;
+  filter: drop-shadow(0 16px 26px rgba(0,0,0,.30)); opacity: 0; }
+.reading.anim .ec-sealedimg { opacity: 1; }
+.reading.anim.revealed .ec-sealedimg { animation: ecSealFade 700ms var(--ease) forwards; }
+
+.reading.anim .ec-card { opacity: 0; transform: translateY(10%); }
+.reading.anim.revealed .ec-card { animation: ecCardIn 800ms var(--ease) 820ms forwards; }
+
+.reading.anim .ec-flowers { opacity: 0; transform: scale(.6); }
+.reading.anim.revealed .ec-flowers { animation: ecFlowerIn 600ms var(--ease) 1720ms forwards; }
+
+.reading.anim .ec-stamp { opacity: 0; transform: scale(1.3) rotate(3deg); }
+.reading.anim.revealed .ec-stamp { animation: ecStampIn 600ms var(--ease) 1720ms forwards; }
+
+.reading.anim .reading-prompt { opacity: 0; transform: translateY(8px); }
+.reading.anim.revealed .reading-prompt { animation: ecPromptIn 500ms var(--ease) 2420ms forwards; }
+
+@keyframes ecSealFade  { to { opacity: 0; } }
+@keyframes ecCardIn    { to { opacity: 1; transform: none; } }
+@keyframes ecFlowerIn  { to { opacity: 1; transform: scale(1); } }
+@keyframes ecStampIn   { 0% { opacity: 0; transform: scale(1.3) rotate(3deg); } 60% { opacity: 1; transform: scale(.96) rotate(3deg); } 100% { opacity: 1; transform: scale(1) rotate(3deg); } }
+@keyframes ecPromptIn  { to { opacity: 1; transform: none; } }
+
 .reading-prompt { margin-top: 34px; }
 .reading-prompt p { font-family: var(--font-serif); font-style: italic; color: var(--fg-dim); font-size: 19px; margin-bottom: 16px; }
-.reading-cta { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
-.reuse-btn { background: transparent; border: none; color: var(--fg-dim); font-family: var(--font-serif); font-style: italic; font-size: 16px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; padding: 6px 4px; transition: color var(--t-med) var(--ease); }
-.reuse-btn:hover { color: var(--fg); }
-.copy-icon-btn { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--card-line); background: transparent; color: var(--fg); display: grid; place-items: center; transition: background var(--t-med) var(--ease), border-color var(--t-med) var(--ease), transform var(--t-med) var(--ease); }
-.copy-icon-btn:hover { background: color-mix(in srgb, var(--fg) 9%, transparent); transform: translateY(-1px); }
-.copy-icon-btn svg { width: 17px; height: 17px; }
-.copy-icon-btn.copied { border-color: var(--fg); }
+.reading-cta { display: flex; align-items: center; justify-content: center; }
+
+/* ---- standalone recipient page (open.html): no header, no wall, no
+   ambient layers, just the letter, the CTA, and the footer link, on the
+   same plain maroon background ---- */
+.open-page { display: flex; flex-direction: column; min-height: 100vh; }
+.open-main { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; padding: 60px 16px 30px; }
 
 /* ---- post animation (centered, full page) ---- */
 .post-overlay { position: fixed; inset: 0; z-index: 90; display: none; overflow-y: auto; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); text-align: center; }
