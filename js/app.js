@@ -148,6 +148,14 @@
     window.prompt('Copy this letter:', text);
   }
 
+  /* The letter has to be written by hand: block paste (keyboard, right-click
+     menu, and dragged-in text) on the write fields. */
+  function blockPaste(el) {
+    ['paste', 'drop'].forEach(function (type) {
+      el.addEventListener(type, function (e) { e.preventDefault(); toast('Please type your letter, no pasting'); });
+    });
+  }
+
   /* ============================================================ WRITE */
   var draft = { to: '', from: '', message: '', flowers: [], font: 'vintage' };
   var writeBuilt = false, phRotate = 0;
@@ -228,6 +236,7 @@
     $('#w-to').addEventListener('input', function (e) { draft.to = e.target.value; $('#c-to').textContent = e.target.value.length + '/25'; updatePreview(); });
     $('#w-from').addEventListener('input', function (e) { draft.from = e.target.value; updatePreview(); });
     $('#w-msg').addEventListener('input', function (e) { draft.message = e.target.value; $('#c-msg').textContent = e.target.value.length + '/140'; updatePreview(); });
+    $$('#w-to, #w-from, #w-msg').forEach(blockPaste);
     $$('[data-flower]').forEach(function (b) {
       b.addEventListener('click', function () {
         var k = b.getAttribute('data-flower');
